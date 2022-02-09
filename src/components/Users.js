@@ -3,7 +3,6 @@ import { Component } from "react";
 import User from "./User";
 import classes from "./Users.module.css";
 
-
 class Users extends Component {
   constructor() {
     super();

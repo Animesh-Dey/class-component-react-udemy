@@ -2,7 +2,14 @@ import { Component } from "react";
 import classes from "./User.module.css";
 
 class User extends Component {
-  constructor(props) {super();}
+  constructor(props) {
+    super();
+  }
+
+  componentWillUnmount(){
+    console.log("unmount");
+  }
+
   render() {
     return <li className={classes.user}>{this.props.name}</li>;
   }
