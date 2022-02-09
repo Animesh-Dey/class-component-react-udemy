@@ -1,13 +1,9 @@
-import { Fragment, useState, useEffect, Component } from "react";
-import classes from "./UserFinder.module.css";
-import Users from "./Users";
-import UsersContext from "./Store/Users-context";
+import { Fragment, useState, useEffect, Component } from 'react';
 
-// const DUMMY_USERS = [
-//   { id: "u1", name: "Max" },
-//   { id: "u2", name: "Manuel" },
-//   { id: "u3", name: "Julie" },
-// ];
+import Users from './Users';
+import classes from './UserFinder.module.css';
+import UsersContext from '../store/users-context';
+import ErrorBoundary from './ErrorBoundary';
 
 class UserFinder extends Component {
   static contextType = UsersContext;
@@ -16,13 +12,15 @@ class UserFinder extends Component {
     super();
     this.state = {
       filteredUsers: [],
-      searchTerm: "",
+      searchTerm: '',
     };
   }
+
   componentDidMount() {
-    //Send https request....
+    // Send http request...
     this.setState({ filteredUsers: this.context.users });
   }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchTerm !== this.state.searchTerm) {
       this.setState({
@@ -34,18 +32,18 @@ class UserFinder extends Component {
   }
 
   searchChangeHandler(event) {
-    this.setState({
-      searchTerm: event.target.value,
-    });
+    this.setState({ searchTerm: event.target.value });
   }
 
   render() {
     return (
       <Fragment>
         <div className={classes.finder}>
-          <input type="search" onChange={this.searchChangeHandler.bind(this)} />
+          <input type='search' onChange={this.searchChangeHandler.bind(this)} />
         </div>
-        <Users users={this.state.filteredUsers} />
+        <ErrorBoundary>
+          <Users users={this.state.filteredUsers} />
+        </ErrorBoundary>
       </Fragment>
     );
   }
@@ -53,7 +51,7 @@ class UserFinder extends Component {
 
 // const UserFinder = () => {
 //   const [filteredUsers, setFilteredUsers] = useState(DUMMY_USERS);
-//   const [searchTerm, setSearchTerm] = useState("");
+//   const [searchTerm, setSearchTerm] = useState('');
 
 //   useEffect(() => {
 //     setFilteredUsers(
@@ -68,7 +66,7 @@ class UserFinder extends Component {
 //   return (
 //     <Fragment>
 //       <div className={classes.finder}>
-//         <input type="search" onChange={searchChangeHandler} />
+//         <input type='search' onChange={searchChangeHandler} />
 //       </div>
 //       <Users users={filteredUsers} />
 //     </Fragment>
